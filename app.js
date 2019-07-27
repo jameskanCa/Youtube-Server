@@ -1,7 +1,7 @@
 let express = require('express');
 let app = express();
 let mongoose = require('mongoose');
-let VideoSession = require('./DatabaseUtils');
+let userSchema = require('./UserSchema');
 let port = process.env.PORT || 3001;
 let bodyParser = require('body-parser');
 
