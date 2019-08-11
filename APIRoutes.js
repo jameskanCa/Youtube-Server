@@ -1,9 +1,7 @@
 'use strict';
 module.exports = function(app) {
-  var youtubeLearning = require('./APIContoller');
+	var youtubeLearning = require('./APIContoller');
 
-  // todoList Routes
-  app.route('/test')
-    .post(youtubeLearning.addNewSession);
-
+	app.route('/storeInitialReview').post(youtubeLearning.addNewSession);
+	app.route('/storeEndSessionInfo/:videoSessionId').post(youtubeLearning.addEndSession);
 };

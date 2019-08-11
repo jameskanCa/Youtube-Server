@@ -5,11 +5,13 @@ let Schema = mongoose.Schema;
 let UserSchema = new Schema({
     userId: String,
     session: [{
-        videoURL: String,
+        videoId: String,
         videoTitle: String,
         purposeDescription: String,
         startTime: Date,
         finishedVideo: Boolean,
+        notes: String,
+        endTime: Date
      }]
 });
 
