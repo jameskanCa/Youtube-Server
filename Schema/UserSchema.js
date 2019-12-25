@@ -10,6 +10,13 @@ let UserSchema = new Schema({
         purposeDescription: String,
         startTime: Date,
         finishedVideo: Boolean,
+        videoMetadata: {
+                url: String,
+                videoTitle : String,
+                videoDuration : String,
+                videoDescription : String,
+                videoCategory : Number
+        },
         notes: String,
         endTime: Date
      }]

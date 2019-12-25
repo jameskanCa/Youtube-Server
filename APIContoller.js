@@ -1,8 +1,8 @@
-var mongoose = require('mongoose'),
+let mongoose = require('mongoose'),
 	userInfo = mongoose.model('Users');
 
 function addNewSession(req, res) {
-	userInfo.findOne({ id: req.body.id }, 'userId session', function(err, user) {
+	userInfo.findOne({ userId: req.body.userId }, 'userId session', function(err, user) {
 		if (err) {
 			console.log(err);
 		}
@@ -21,20 +21,19 @@ function addNewSession(req, res) {
 			let sessionCheck = user.session.find((sessionTemp) => {
 				return sessionTemp.videoId.toString() == req.body.session[0].videoId.toString();
 			});
-			if(sessionCheck != null){
+			if (sessionCheck != null) {
 				res.send(req.body.session[0].videoId);
-			}else{
-			user.session.push(req.body.session[0]);
-
-			user.save(function(err, user) {
-				if (err) {
-					console.log(err);
-					res.send(err);
-				}
-
-				let lengthOfSessions = user.session.length;
-				res.send(user.session[lengthOfSessions - 1].videoId);
-			});
+			} else {
+				user.session.push(req.body.session[0]);
+				user.save(function(err, user) {
+					if (err) {
+						console.log(err);
+						res.send(err);
+					}
+					console.log(req.body.session[0]);
+					let lengthOfSessions = user.session.length;
+					res.send(user.session[lengthOfSessions - 1].videoId);
+				});
 			}
 		}
 	});
@@ -43,12 +42,9 @@ function addNewSession(req, res) {
 function addEndSession(req, res) {
 	let videoSessionId = req.params.videoSessionId.toString();
 	userInfo.findOne({ userId: req.body.userId }, function(err, userInfo) {
-		if (err) {
+		if (err != null || userInfo == null) {
 			console.log(err);
-		}
-		if (userInfo == null) {
-			console.log("user Info not found");
-			res.send('error');
+			res.send(err);
 		} else {
 			let expected = userInfo.session.find((session) => {
 				return session.videoId.toString() == videoSessionId.toString();
