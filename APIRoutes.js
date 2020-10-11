@@ -5,11 +5,14 @@ module.exports = function (app) {
     .route("/storeEndSessionInfo/:videoSessionId")
     .post(youtubeLearning.addEndSession);
 
-  // Unimplemented Ports
   let dataRetrevial = require("./UserDataOperations");
-  app.route("/getUserSessions/:userId").get(dataRetrevial.GetUserSessions);
+  app.route("/getUserSessions/:userId").get(dataRetrevial.getUserSessions);
+
+  app
+    .route("/delete/:userId/:videoSessionId")
+    .delete(youtubeLearning.deleteSession);
 
   app.route("/").get(() => {
-    return "hello!";
+    return "Youtube Notes Reminder Server!";
   });
 };
