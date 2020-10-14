@@ -46,6 +46,7 @@ function addNewSession(req, res) {
 
 function addEndSession(req, res) {
   let videoSessionId = req.params.videoSessionId.toString();
+
   userInfo.findOne({ userId: req.body.userId }, function (err, userInfo) {
     if (err != null || userInfo == null) {
       console.log(err);
@@ -54,6 +55,7 @@ function addEndSession(req, res) {
       let expected = userInfo.session.find((session) => {
         return session.videoId.toString() == videoSessionId.toString();
       });
+
       expected.finishedVideo = true;
       expected.endTime = req.body.endTime;
       expected.notes = req.body.notes;
@@ -70,6 +72,7 @@ function addEndSession(req, res) {
 function deleteSession(req, res) {
   let videoSessionId = req.params.videoSessionId.toString();
   let userId = req.params.userId.toString();
+
   userInfo.findOne({ userId: userId }, function (err, userInfo) {
     if (err != null || userInfo == null) {
       console.log(err);
@@ -78,6 +81,7 @@ function deleteSession(req, res) {
       userInfo.session = userInfo.session.filter((session) => {
         return session._id.toString() !== videoSessionId.toString();
       });
+
       userInfo.save(function (err) {
         if (err) {
           console.log(err);

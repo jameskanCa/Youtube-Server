@@ -1,12 +1,13 @@
 module.exports = function (app) {
   let youtubeLearning = require("./APIContoller");
+  let dataRetrevial = require("./UserDataOperations");
+
   app.route("/storeInitialReview").post(youtubeLearning.addNewSession);
+  app.route("/getUserSessions/:userId").get(dataRetrevial.getUserSessions);
+
   app
     .route("/storeEndSessionInfo/:videoSessionId")
     .post(youtubeLearning.addEndSession);
-
-  let dataRetrevial = require("./UserDataOperations");
-  app.route("/getUserSessions/:userId").get(dataRetrevial.getUserSessions);
 
   app
     .route("/delete/:userId/:videoSessionId")
